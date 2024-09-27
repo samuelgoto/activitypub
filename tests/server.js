@@ -49,7 +49,7 @@ describe("index", () => {
         "https://w3id.org/security/v1"
       ],
       id: "https://example.com/@alice",
-      type: "Social",
+      type: "Person",
       inbox: "https://example.com/@alice/inbox",
       endpoints: {
         id: "https://example.com/@alice#endpoints",
@@ -61,7 +61,7 @@ describe("index", () => {
       name: "Alice",
       outbox: "https://example.com/@alice/outbox",
       preferredUsername: "alice",
-      summary: ""
+      summary: "Test user"
     });
     
     const {inbox} = alice;
