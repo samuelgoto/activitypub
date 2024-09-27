@@ -8,7 +8,7 @@
     "test": "mocha -w tests"
   },
   "engines": {
-    "node": "14.x"
+    "node": "22.x"
   },
   "dependencies": {
     "activitypub-express": "^4.4.2",
