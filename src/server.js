@@ -101,6 +101,8 @@ class Server {
     );
     await apex.store.saveObject(actor);
 
+    // https://paul.kinlan.me/adding-activity-pub-to-your-static-site/
+    
     this.server = app.listen(port);
   }
 

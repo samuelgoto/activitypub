@@ -120,6 +120,26 @@ describe("index", () => {
 	"Accept": "application/activity+json",
       }
     })).json()).totalItems).equalsTo(1);
+
+
+    const outbox = await fetch("http://localhost:8080/@alice/outbox", {
+      headers: {
+	"Accept": "application/activity+json",
+      }
+    });
+
+    assertThat(outbox.ok).equalsTo(true);
+
+    assertThat(await outbox.json()).equalsTo({
+      "@context": [
+        "https://www.w3.org/ns/activitystreams",
+        "https://w3id.org/security/v1"
+      ],
+      "first": "https://example.com/@alice/outbox?page=true",
+      "id": "https://example.com/@alice/outbox",
+      "totalItems": 0,
+      "type": "OrderedCollection"
+    });
     
     await b.close();
 
