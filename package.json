@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "mocha -w tests"
+  },
+  "dependencies": {
+    "activitypub-express": "^4.4.2",
+    "mocha": "^10.7.3",
+    "mongodb-memory-server": "^10.0.1"
+  }
+}
