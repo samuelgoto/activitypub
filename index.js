@@ -13,6 +13,7 @@ async function main() {
   const port = process.env.PORT || 8080;
   const domain = process.env.DOMAIN || "localhost";
   await server.listen(domain, port);
+  console.log(`listening to ${port} on ${domain}.`);
 }
 
 main();
