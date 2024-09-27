@@ -17,8 +17,8 @@ async function main() {
 
   // Add a test user
   await server.addUser(
-    "alice",
-    "Alice",
+    "bob",
+    "Bob",
     "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg"
   );
 
