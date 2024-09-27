@@ -57,7 +57,10 @@ class Server {
     app.get(routes.activity, apex.net.activityStream.get);
     app.get(routes.shares, apex.net.shares.get);
     app.get(routes.likes, apex.net.likes.get);
-    app.get('/.well-known/webfinger', apex.net.webfinger.get);
+    // app.get('/.well-known/webfinger', apex.net.webfinger.get);
+    app.get('/.well-known/webfinger', (req, res) => {
+      throw new Error("hello world!");
+    });
     app.get('/.well-known/nodeinfo', apex.net.nodeInfoLocation.get);
     app.get('/nodeinfo/:version', apex.net.nodeInfo.get);
     app.post('/proxy', apex.net.proxy.post);
