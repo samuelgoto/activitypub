@@ -27,7 +27,7 @@ class Server {
     const apex = ActivitypubExpress({
       name: 'Apex Example',
       version: '1.0.0',
-      domain: `${domain}:${port}`,
+      domain: `${domain}`,
       actorParam: 'actor',
       objectParam: 'id',
       activityParam: 'id',

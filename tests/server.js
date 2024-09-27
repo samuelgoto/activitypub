@@ -18,14 +18,14 @@ describe("index", () => {
     const port = 8080;
     await server.listen("localhost", port);
 
-    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:me@localhost:${port}`);
+    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:me@localhost`);
 
     assertThat(request.ok).equalsTo(true);
 
     assertThat(await request.json()).equalsTo({
-      "subject": "acct:me@localhost:8080",
+      "subject": "acct:me@localhost",
       "links": [{
-	"href": "https://localhost:8080/u/me",
+	"href": "https://localhost/u/me",
 	"rel": "self",
 	"type": "application/activity+json"
       }]
@@ -48,24 +48,24 @@ describe("index", () => {
         "https://www.w3.org/ns/activitystreams",
         "https://w3id.org/security/v1"
       ],
-      id: "https://localhost:8080/u/me",
+      id: "https://localhost/u/me",
       type: "Social",
-      inbox: "https://localhost:8080/u/me/inbox",
+      inbox: "https://localhost/u/me/inbox",
       endpoints: {
-        id: "https://localhost:8080/u/me#endpoints",
+        id: "https://localhost/u/me#endpoints",
         proxyUrl: "https://localhost/proxy"
       },
-      followers: "https://localhost:8080/u/me/followers",
-      following: "https://localhost:8080/u/me/following",
-      liked: "https://localhost:8080/u/me/liked",
+      followers: "https://localhost/u/me/followers",
+      following: "https://localhost/u/me/following",
+      liked: "https://localhost/u/me/liked",
       name: "John Doe",
-      outbox: "https://localhost:8080/u/me/outbox",
+      outbox: "https://localhost/u/me/outbox",
       preferredUsername: "me",
       summary: ""
     });
     
     const {inbox} = alice;
-    assertThat(inbox).equalsTo("https://localhost:8080/u/me/inbox");
+    assertThat(inbox).equalsTo("https://localhost/u/me/inbox");
 
     const bob = express();
 
@@ -108,7 +108,7 @@ describe("index", () => {
 	"id": "1234",
 	"type": "Follow",
 	"actor": "http://localhost:3000/users/bob",
-	"object": "https://localhost:8080/u/me"
+	"object": "https://localhost/u/me"
       })
     });
 
