@@ -91,6 +91,14 @@ class Server {
       resp.send("hello world");
     });
 
+    const that = this;
+    
+    app.get("/post", (req, resp) => {
+      that.post("wow!");
+      resp.send("Published!");
+    });
+
+    
     apex.store.db = this.client.db('DB_NAME');
     await apex.store.setup();
     
