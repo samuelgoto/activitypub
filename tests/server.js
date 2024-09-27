@@ -16,16 +16,16 @@ describe("index", () => {
 
     const server = new Server(client);
     const port = 8080;
-    await server.listen("localhost", port);
+    await server.listen("example.com", port);
 
-    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:alice@localhost`);
+    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:alice@example.com`);
 
     assertThat(request.ok).equalsTo(true);
 
     assertThat(await request.json()).equalsTo({
-      "subject": "acct:alice@localhost",
+      "subject": "acct:alice@example.com",
       "links": [{
-	"href": "https://localhost/alice",
+	"href": "https://example.com/alice",
 	"rel": "self",
 	"type": "application/activity+json"
       }]
@@ -48,24 +48,24 @@ describe("index", () => {
         "https://www.w3.org/ns/activitystreams",
         "https://w3id.org/security/v1"
       ],
-      id: "https://localhost/alice",
+      id: "https://example.com/alice",
       type: "Social",
-      inbox: "https://localhost/alice/inbox",
+      inbox: "https://example.com/alice/inbox",
       endpoints: {
-        id: "https://localhost/alice#endpoints",
+        id: "https://example.com/alice#endpoints",
         proxyUrl: "https://localhost/proxy"
       },
-      followers: "https://localhost/alice/followers",
-      following: "https://localhost/alice/following",
-      liked: "https://localhost/alice/liked",
+      followers: "https://example.com/alice/followers",
+      following: "https://example.com/alice/following",
+      liked: "https://example.com/alice/liked",
       name: "Alice",
-      outbox: "https://localhost/alice/outbox",
+      outbox: "https://example.com/alice/outbox",
       preferredUsername: "alice",
       summary: ""
     });
     
     const {inbox} = alice;
-    assertThat(inbox).equalsTo("https://localhost/alice/inbox");
+    assertThat(inbox).equalsTo("https://example.com/alice/inbox");
 
     const bob = express();
 
@@ -108,7 +108,7 @@ describe("index", () => {
 	"id": "1234",
 	"type": "Follow",
 	"actor": "http://localhost:3000/users/bob",
-	"object": "https://localhost/alice"
+	"object": "https://example.com/alice"
       })
     });
 
