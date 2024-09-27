@@ -36,6 +36,16 @@ class Server {
 	proxyUrl: 'https://localhost/proxy'
       }
     });
+
+    app.use((req, res, next) => {
+      console.log(`${req.method}, ${req.originalUrl}, `, req.headers);
+      // throw new Error("hi");
+      // watch for end of theresponse
+      res.on('close', () => {
+        console.log(`close response, res.statusCode = ${res.statusCode}, outbound headers: `, res.getHeaders());
+      });
+      next();
+    });
     
     app.use(
       express.json({ type: apex.consts.jsonldTypes }),
@@ -64,7 +74,7 @@ class Server {
     app.get('/.well-known/nodeinfo', apex.net.nodeInfoLocation.get);
     app.get('/nodeinfo/:version', apex.net.nodeInfo.get);
     app.post('/proxy', apex.net.proxy.post);
-
+    
     app.on('apex-outbox', async (msg) => {
       //if (msg.activity.type === 'Create') {
       // console.log(`Outbox: new ${msg.activity.type} from ${msg.actor}`)
