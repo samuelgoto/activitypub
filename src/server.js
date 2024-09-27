@@ -75,6 +75,8 @@ class Server {
 
       // Auto-accept follows
       if (activity.type == "Follow") {
+	// console.log("hi");
+	// console.log(recipient);
 	const accept = await apex.buildActivity("Accept", recipient.id, actor.id, {
           object: activity.id
 	});
@@ -92,18 +94,46 @@ class Server {
     apex.store.db = this.client.db('DB_NAME');
     await apex.store.setup();
     
-    const actor = await apex.createActor(
-      "alice",
-      "Alice",
-      "Test user",
-      "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg",
-      "Person"
-    );
-    await apex.store.saveObject(actor);
-
+    this.apex = apex;
+    this.domain = domain;
+        
     // https://paul.kinlan.me/adding-activity-pub-to-your-static-site/
     
     this.server = app.listen(port);
+  }
+
+  async addUser(username, name, photo) {
+    const actor = await this.apex.createActor(
+      username,
+      name,
+      "Test user",
+      photo,
+      "Person"
+    );
+    await this.apex.store.saveObject(actor);
+  }
+
+  async post(content) {
+    const note = await this.apex.buildActivity("Note", `https://${this.domain}/@alice`, [this.apex.consts.publicAddress], {
+      object: {
+	content: content,
+      }
+      //  object: activity.object[0].id,
+      // make sure sender can see it even if they don't follow yet
+      // cc: actor.id
+    });
+    // console.log(share);
+    const create = await this.apex.buildActivity("Create", `https://${this.domain}/@alice`, [this.apex.consts.publicAddress], {
+      object: note
+      //  object: activity.object[0].id,
+      // make sure sender can see it even if they don't follow yet
+      // cc: actor.id
+    });
+
+    // console.log(create);
+
+    const actor = await this.apex.store.getObject(`https://${this.domain}/@alice`);
+    this.apex.addToOutbox(actor, create);
   }
 
   close() {

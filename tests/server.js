@@ -18,6 +18,8 @@ describe("index", () => {
     const port = 8080;
     await server.listen("example.com", port);
 
+    await server.addUser("alice", "Alice", "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg");
+    
     const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:@alice@example.com`);
 
     assertThat(request.ok).equalsTo(true);
@@ -122,6 +124,8 @@ describe("index", () => {
     })).json()).totalItems).equalsTo(1);
 
 
+    await server.post("Hello World");
+
     const outbox = await fetch("http://localhost:8080/@alice/outbox", {
       headers: {
 	"Accept": "application/activity+json",
@@ -137,9 +141,31 @@ describe("index", () => {
       ],
       "first": "https://example.com/@alice/outbox?page=true",
       "id": "https://example.com/@alice/outbox",
-      "totalItems": 0,
+      "totalItems": 1,
       "type": "OrderedCollection"
     });
+
+    const page = await fetch("http://localhost:8080/@alice/outbox?page=true", {
+      headers: {
+	"Accept": "application/activity+json",
+      }
+    });
+
+    assertThat(page.ok).equalsTo(true);
+
+    // const p = await page.json();
+
+    // delete p.next;
+    
+    //assertThat(p).equalsTo({
+    //  "@context": [
+    //    "https://www.w3.org/ns/activitystreams",
+    //    "https://w3id.org/security/v1"
+    //  ],
+    //  "partOf": "https://example.com/@alice/outbox",
+    //  "type": "OrderedCollectionPage"
+    //});
+
     
     await b.close();
 
