@@ -6,7 +6,7 @@ class Server {
     this.client = client;
   }
 
-  async listen(port) {
+  async listen(domain, port) {
     const app = express();
     const routes = {
       actor: '/u/:actor',
@@ -27,7 +27,7 @@ class Server {
     const apex = ActivitypubExpress({
       name: 'Apex Example',
       version: '1.0.0',
-      domain: `localhost:${port}`,
+      domain: `${domain}:${port}`,
       actorParam: 'actor',
       objectParam: 'id',
       activityParam: 'id',
@@ -72,7 +72,7 @@ class Server {
     const actor = await apex.createActor("me", "John Doe", "", null, "Social");
     await apex.store.saveObject(actor);
 
-    console.log(`listening to port ${port}.`);
+    console.log(`listening to ${port} on ${domain}.`);
     this.server = app.listen(port);
   }
 

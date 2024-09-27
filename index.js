@@ -10,8 +10,9 @@ async function main() {
   await client.connect();
 
   const server = new Server(client);
-  const port = 8080;
-  await server.listen(port);
+  const port = process.env.PORT || 8080;
+  const domain = process.env.DOMAIN || "localhost";
+  await server.listen(domain, port);
 }
 
 main();

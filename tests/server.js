@@ -16,7 +16,7 @@ describe("index", () => {
 
     const server = new Server(client);
     const port = 8080;
-    await server.listen(port);
+    await server.listen("localhost", port);
 
     const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:me@localhost:${port}`);
 
