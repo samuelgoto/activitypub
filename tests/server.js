@@ -94,7 +94,7 @@ describe("index", () => {
       });
     });
     bob.post("*", (req, res) => {
-      assertThat(true).equalsTo(false);
+      throw new Error("Unexpected POST request");
     });
     const b = await bob.listen(3000);
 
@@ -118,7 +118,7 @@ describe("index", () => {
       headers: {
 	"Accept": "application/activity+json",
       }
-    })).json()).totalItems).equalsTo(0);
+    })).json()).totalItems).equalsTo(1);
     
     await b.close();
 

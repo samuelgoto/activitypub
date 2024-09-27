@@ -62,6 +62,29 @@ class Server {
     app.get('/nodeinfo/:version', apex.net.nodeInfo.get);
     app.post('/proxy', apex.net.proxy.post);
 
+    app.on('apex-outbox', async (msg) => {
+      //if (msg.activity.type === 'Create') {
+      // console.log(`Outbox: new ${msg.activity.type} from ${msg.actor}`)
+      //}
+    });
+
+    app.on('apex-inbox', async (msg) => {
+      const {actor, activity, recipient, object} = msg;
+
+      // console.log(`Inbox: new ${activity.type} from ${JSON.stringify(actor.id)} to ${recipient.id}`);
+
+      // Auto-accept follows
+      if (activity.type == "Follow") {
+	const accept = await apex.buildActivity("Accept", recipient.id, actor.id, {
+          object: activity.id
+	});
+	// console.log(accept);
+	const {postTask: publishUpdatedFollowers} = await apex.acceptFollow(recipient, activity);
+	await apex.addToOutbox(recipient, accept);
+	return publishUpdatedFollowers();
+      }
+    });
+
     app.get("/", (req, resp) => {
       resp.send("hello world");
     });
