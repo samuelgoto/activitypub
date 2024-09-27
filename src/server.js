@@ -62,12 +62,17 @@ class Server {
     app.get('/nodeinfo/:version', apex.net.nodeInfo.get);
     app.post('/proxy', apex.net.proxy.post);
 
+    app.get("/", (req, resp) => {
+      resp.send("hello world");
+    });
+
     apex.store.db = this.client.db('DB_NAME');
     await apex.store.setup();
     
     const actor = await apex.createActor("me", "John Doe", "", null, "Social");
     await apex.store.saveObject(actor);
 
+    console.log(`listening to port ${port}.`);
     this.server = app.listen(port);
   }
 
