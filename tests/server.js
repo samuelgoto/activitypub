@@ -57,6 +57,7 @@ describe("index", () => {
       },
       followers: "https://example.com/@alice/followers",
       following: "https://example.com/@alice/following",
+      icon: "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg",
       liked: "https://example.com/@alice/liked",
       name: "Alice",
       outbox: "https://example.com/@alice/outbox",

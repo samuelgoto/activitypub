@@ -92,7 +92,13 @@ class Server {
     apex.store.db = this.client.db('DB_NAME');
     await apex.store.setup();
     
-    const actor = await apex.createActor("alice", "Alice", "Test user", "", "Person");
+    const actor = await apex.createActor(
+      "alice",
+      "Alice",
+      "Test user",
+      "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg",
+      "Person"
+    );
     await apex.store.saveObject(actor);
 
     this.server = app.listen(port);
