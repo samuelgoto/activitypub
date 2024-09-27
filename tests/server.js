@@ -1,7 +1,8 @@
 const express = require("express");
+const {Server} = require("../src/server.js");
+
 const {MongoMemoryServer} = require("mongodb-memory-server");
 const {MongoClient} = require("mongodb");
-const {Server} = require("../src/server.js");
 
 const assert = require("assert");
 

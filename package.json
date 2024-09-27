@@ -1,6 +1,14 @@
 {
+  "name": "activitypub",
+  "version": "0.0.1",
+  "description": "An ActivityPub server for personal blogs",
+  "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha -w tests"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "dependencies": {
     "activitypub-express": "^4.4.2",
