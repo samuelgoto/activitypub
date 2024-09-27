@@ -18,20 +18,20 @@ describe("index", () => {
     const port = 8080;
     await server.listen("localhost", port);
 
-    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:me@localhost`);
+    const request = await fetch(`http://localhost:${port}/.well-known/webfinger?resource=acct:alice@localhost`);
 
     assertThat(request.ok).equalsTo(true);
 
     assertThat(await request.json()).equalsTo({
-      "subject": "acct:me@localhost",
+      "subject": "acct:alice@localhost",
       "links": [{
-	"href": "https://localhost/u/me",
+	"href": "https://localhost/alice",
 	"rel": "self",
 	"type": "application/activity+json"
       }]
     });
 
-    const me = await fetch("http://localhost:8080/u/me", {
+    const me = await fetch("http://localhost:8080/alice", {
       headers: {
 	"Accept": "application/activity+json",
       }
@@ -48,24 +48,24 @@ describe("index", () => {
         "https://www.w3.org/ns/activitystreams",
         "https://w3id.org/security/v1"
       ],
-      id: "https://localhost/u/me",
+      id: "https://localhost/alice",
       type: "Social",
-      inbox: "https://localhost/u/me/inbox",
+      inbox: "https://localhost/alice/inbox",
       endpoints: {
-        id: "https://localhost/u/me#endpoints",
+        id: "https://localhost/alice#endpoints",
         proxyUrl: "https://localhost/proxy"
       },
-      followers: "https://localhost/u/me/followers",
-      following: "https://localhost/u/me/following",
-      liked: "https://localhost/u/me/liked",
-      name: "John Doe",
-      outbox: "https://localhost/u/me/outbox",
-      preferredUsername: "me",
+      followers: "https://localhost/alice/followers",
+      following: "https://localhost/alice/following",
+      liked: "https://localhost/alice/liked",
+      name: "Alice",
+      outbox: "https://localhost/alice/outbox",
+      preferredUsername: "alice",
       summary: ""
     });
     
     const {inbox} = alice;
-    assertThat(inbox).equalsTo("https://localhost/u/me/inbox");
+    assertThat(inbox).equalsTo("https://localhost/alice/inbox");
 
     const bob = express();
 
@@ -98,7 +98,7 @@ describe("index", () => {
     });
     const b = await bob.listen(3000);
 
-    const follow = await fetch("http://localhost:8080/u/me/inbox", {
+    const follow = await fetch("http://localhost:8080/alice/inbox", {
       method: "POST",
       headers: {
 	"Content-Type": "application/activity+json"
@@ -108,13 +108,13 @@ describe("index", () => {
 	"id": "1234",
 	"type": "Follow",
 	"actor": "http://localhost:3000/users/bob",
-	"object": "https://localhost/u/me"
+	"object": "https://localhost/alice"
       })
     });
 
     assertThat(follow.ok).equalsTo(true);
 
-    assertThat((await (await fetch("http://localhost:8080/u/me/followers", {
+    assertThat((await (await fetch("http://localhost:8080/alice/followers", {
       headers: {
 	"Accept": "application/activity+json",
       }

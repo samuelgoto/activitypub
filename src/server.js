@@ -9,18 +9,18 @@ class Server {
   async listen(domain, port) {
     const app = express();
     const routes = {
-      actor: '/u/:actor',
+      actor: '/:actor',
       object: '/o/:id',
       activity: '/s/:id',
-      inbox: '/u/:actor/inbox',
-      outbox: '/u/:actor/outbox',
-      followers: '/u/:actor/followers',
-      following: '/u/:actor/following',
-      liked: '/u/:actor/liked',
-      collections: '/u/:actor/c/:id',
-      blocked: '/u/:actor/blocked',
-      rejections: '/u/:actor/rejections',
-      rejected: '/u/:actor/rejected',
+      inbox: '/:actor/inbox',
+      outbox: '/:actor/outbox',
+      followers: '/:actor/followers',
+      following: '/:actor/following',
+      liked: '/:actor/liked',
+      collections: '/:actor/c/:id',
+      blocked: '/:actor/blocked',
+      rejections: '/:actor/rejections',
+      rejected: '/:actor/rejected',
       shares: '/s/:id/shares',
       likes: '/s/:id/likes'
     }
@@ -69,7 +69,7 @@ class Server {
     apex.store.db = this.client.db('DB_NAME');
     await apex.store.setup();
     
-    const actor = await apex.createActor("me", "John Doe", "", null, "Social");
+    const actor = await apex.createActor("alice", "Alice", "", null, "Social");
     await apex.store.saveObject(actor);
 
     console.log(`listening to ${port} on ${domain}.`);
