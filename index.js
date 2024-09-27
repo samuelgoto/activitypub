@@ -22,7 +22,7 @@ async function main() {
     "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg"
   );
 
-  await server.post("Hello World");
+  await server.post("bob", "Hello World");
 }
 
 main();

@@ -124,7 +124,7 @@ describe("index", () => {
     })).json()).totalItems).equalsTo(1);
 
 
-    await server.post("Hello World");
+    await server.post("alice", "Hello World");
 
     const outbox = await fetch("http://localhost:8080/@alice/outbox", {
       headers: {

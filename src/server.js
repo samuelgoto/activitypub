@@ -121,8 +121,8 @@ class Server {
     await this.apex.store.saveObject(actor);
   }
 
-  async post(content) {
-    const note = await this.apex.buildActivity("Note", `https://${this.domain}/@alice`, [this.apex.consts.publicAddress], {
+  async post(username, content) {
+    const note = await this.apex.buildActivity("Note", `https://${this.domain}/@${username}`, [this.apex.consts.publicAddress], {
       object: {
 	content: content,
       }
@@ -131,7 +131,7 @@ class Server {
       // cc: actor.id
     });
     // console.log(share);
-    const create = await this.apex.buildActivity("Create", `https://${this.domain}/@alice`, [this.apex.consts.publicAddress], {
+    const create = await this.apex.buildActivity("Create", `https://${this.domain}/@${username}`, [this.apex.consts.publicAddress], {
       object: note
       //  object: activity.object[0].id,
       // make sure sender can see it even if they don't follow yet
@@ -140,7 +140,7 @@ class Server {
 
     // console.log(create);
 
-    const actor = await this.apex.store.getObject(`https://${this.domain}/@alice`);
+    const actor = await this.apex.store.getObject(`https://${this.domain}/@${username}`);
     this.apex.addToOutbox(actor, create);
   }
 
