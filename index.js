@@ -17,12 +17,12 @@ async function main() {
 
   // Add a test user
   await server.addUser(
-    "bob",
-    "Bob",
+    "alice",
+    "Alice",
     "https://pbs.twimg.com/profile_images/920758039325564928/vp0Px4kC_400x400.jpg"
   );
 
-  await server.post("bob", "Hello World");
+  await server.post("alice", "Hello World");
 }
 
 main();

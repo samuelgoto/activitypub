@@ -109,6 +109,10 @@ class Server {
     this.domain = domain;
         
     // https://paul.kinlan.me/adding-activity-pub-to-your-static-site/
+    // https://danp.net/posts/my-mastodon-setup/
+    // https://maho.dev/2024/02/bringing-your-site-to-the-fediverse-a-practical-guide-for-static-sites-part-1/
+    // https://socialhub.activitypub.rocks/t/first-steps-why-is-my-profile-not-found-on-mastodon-instances/2865
+    
     
     this.server = app.listen(port);
   }
